@@ -36,6 +36,9 @@ get_token()
 #Set json response and the required header, along with the body we are passing in queue_query function
 response_json = response.json()
 requestHeaders = {"Authorization": f"{ response_json['token_type'] } { response_json['access_token']}"}
+
+#The body uses to search one specific queueID along with one specific mediatype interaction(in this case email)   
+#Consult with https://developer.mypurecloud.com/developer-tools/#/analytics-query-builder to build search queries
 body = {
         "filter": {
         "type": "and",
@@ -53,7 +56,7 @@ body = {
             "type": "dimension",
             "dimension": "queueId",
             "operator": "matches",
-            "value": "c76fea65-d8fa-461f-897f-1c7e7e09b9f0"
+            "value": "c76fkl65-d9fa-421f-897f-1c7e7e09b9f0"
             }
             ]
         }
