@@ -23,7 +23,7 @@ def queue_query() -> "result":
     result = result["data"]
     result = result[0]
     
-#Function for error handling
+#Function for error handling depending on the response code
 def error_handling(text:str) -> None:
     if response.status_code == 200:
         print(text)
