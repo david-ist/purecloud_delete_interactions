@@ -70,14 +70,15 @@ body = {
         ]
         }
 
-queue_query()
-#Check if "obeservations" was in the response(depends on whether are there any interactions in the queue) and if yes, loop over the convIDs and delete those with
-#the disconnect request
-if "observations" in result:
-    result_final = result["observations"]
-    for i in result_final:
-        convid = i["conversationId"]
-        response = requests.post(f"https://api.mypurecloud.de/api/v2/conversations/{convid}/disconnect", headers=requestHeaders)
-        error_handling(f"{convid} has been deleted")
-else:
-    print("no e-mail found")
+#Observations query only returns maximum of 100 values. With while loop we mitigate this by rerunning queue_query func to retrieve another 100 batch
+while True:
+    queue_query()
+    if "observations" in result:
+        result_final = result["observations"]
+        for i in result_final:
+            convid = i["conversationId"]
+            response = requests.post(f"https://api.mypurecloud.de/api/v2/conversations/{convid}/disconnect", headers=requestHeaders)
+            error_handling(f"{convid} has been deleted")
+    else:
+        print("no more interactions found")
+        sys.exit()
